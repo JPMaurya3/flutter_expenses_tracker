@@ -35,6 +35,7 @@ class _ExpensesState extends State<Expenses> {
 
   void _openAddExpenseOverlay() {
     showModalBottomSheet(
+      isScrollControlled: true,// it is used for full screen modal
         context: context,
         builder: (ctx) {
           return NewExpense(onAddExpense: _addExpense);
@@ -42,16 +43,17 @@ class _ExpensesState extends State<Expenses> {
   }
 
   void removeExpense(Expense expense) {
-    final expenseIndex = _registeredExpenses.indexOf(expense);
+    final expenseIndex = _registeredExpenses.indexOf(expense);// get index that we removed
     setState(() {
       _registeredExpenses.remove(expense);
     });
     ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         duration: const Duration(seconds: 3),
         content: SnackBarAction(
           onPressed: () {
             setState(() {
+              // Inserts element at position index in this list.
               _registeredExpenses.insert(expenseIndex, expense);
             });
           },

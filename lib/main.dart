@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    // k used in flutter for global variable
     var kColorScheme =
         ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 96, 59, 181));
     var kDarkScheme = ColorScheme.fromSeed(
@@ -23,11 +24,13 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData().copyWith(
         useMaterial3: true,
+        //colorScheme provides a centralized way to manage colors in your app based on the Material Design system.
         colorScheme: kColorScheme,
         appBarTheme: const AppBarTheme().copyWith(
             backgroundColor: kColorScheme.onPrimaryContainer,
             foregroundColor: kDarkScheme.primaryContainer),
         cardTheme: const CardTheme().copyWith(
+          // copywith used for set new value or override theme
             color: kColorScheme.secondaryContainer,
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8)),
         elevatedButtonTheme: ElevatedButtonThemeData(
