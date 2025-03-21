@@ -70,73 +70,78 @@ class _NewExpenseState extends State<NewExpense> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TextFormField(
-          maxLength: 50,
-          controller: _titleController,
-          decoration: const InputDecoration(label: Text("Title")),
-        ),
-        Row(
+    return SingleChildScrollView(
+      child: Container(
+        padding: EdgeInsets.all(16),
+        child: Column(
           children: [
-            Expanded(
-                child: TextFormField(
-              maxLength: 20,
-              controller: _amountController,
-              decoration: const InputDecoration(
-                  prefixText: "\$", label: Text("Amount")),
-            )),
-            Expanded(
-                child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
+            TextFormField(
+              maxLength: 50,
+              controller: _titleController,
+              decoration: const InputDecoration(label: Text("Title")),
+            ),
+            Row(
               children: [
-                // text as a place holder
-                Text(_selectedDate == null
-                    ? "No date Selected"
-                    : formatter.format(_selectedDate!)),
-                IconButton(
-                    onPressed: _presentDayPicker,// present day picker used as a value
-                    icon: const Icon(Icons.calendar_month))
+                Expanded(
+                    child: TextFormField(
+                  maxLength: 20,
+                  controller: _amountController,
+                  decoration: const InputDecoration(
+                      prefixText: "\$", label: Text("Amount")),
+                )),
+                Expanded(
+                    child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // text as a place holder
+                    Text(_selectedDate == null
+                        ? "No date Selected"
+                        : formatter.format(_selectedDate!)),
+                    IconButton(
+                        onPressed: _presentDayPicker,// present day picker used as a value
+                        icon: const Icon(Icons.calendar_month))
+                  ],
+                ))
               ],
-            ))
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Row(
+              children: [
+                DropdownButton(
+                    value: _selectedCategory,
+                    // here we get all category value
+                    items: Category.values.map((catergory) {
+                      return DropdownMenuItem(
+                        value: catergory,// select value by user
+                        // name property used in enum to access enum value
+                        child: Text(catergory.name.toUpperCase()),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        if (value == null) {
+                          return;
+                        }
+                        setState(() {
+                          _selectedCategory = value;
+                        });
+                      });
+                    }),
+                const Spacer(),
+                TextButton(
+                    onPressed: Navigator.of(context).pop,
+                    child: const Text('Cancel')),
+                ElevatedButton(
+                    onPressed: _submitExpenseData,
+                    child: const Text('Save Expense'))
+              ],
+            )
           ],
         ),
-        const SizedBox(
-          height: 16,
-        ),
-        Row(
-          children: [
-            DropdownButton(
-                value: _selectedCategory,
-                // here we get all category value
-                items: Category.values.map((catergory) {
-                  return DropdownMenuItem(
-                    value: catergory,// select value by user
-                    // name property used in enum to access enum value
-                    child: Text(catergory.name.toUpperCase()),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    if (value == null) {
-                      return;
-                    }
-                    setState(() {
-                      _selectedCategory = value;
-                    });
-                  });
-                }),
-            const Spacer(),
-            TextButton(
-                onPressed: Navigator.of(context).pop,
-                child: const Text('Cancel')),
-            ElevatedButton(
-                onPressed: _submitExpenseData,
-                child: const Text('Save Expense'))
-          ],
-        )
-      ],
+      ),
     );
   }
 }

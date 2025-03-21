@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'expenses.dart';
 
 void main() {
+  /*WidgetsFlutterBinding.ensureInitialized(); // it ensure that flutter engine and frame-work are communicate to each other
+  // System Chrome , track your mobile orientation
+  SystemChrome.setPreferredOrientations(<DeviceOrientation>[
+    DeviceOrientation.portraitUp,
+  ]).then((anonymousFunction){
+    // anonymousFunction:- This is particularly handy for callbacks, passing functions as arguments to other functions,
+    // or defining short-lived functions that are used only within a limited scope.
+    runApp(const MyApp());
+  });*/
   runApp(const MyApp());
+
 }
 
 class MyApp extends StatelessWidget {
